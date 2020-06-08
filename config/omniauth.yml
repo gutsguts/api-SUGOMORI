@@ -1,0 +1,22 @@
+production: &production
+  facebook:
+    key: 182798436442915
+    secret: 824acc7b16e857957d38f81c8bc7c471
+  twitter:
+    key: DrRk6Ale3jgrQ9t3VaAdRpo8J
+    secret: izp0vUdeTGZDGcvqcW0XTY5z4c6e8m5MN9auFsPWdR4B9USBrP
+  github:
+    key: 980be87ea15b70a8e589
+    secret: 510ddbee159df26e03a7066d5c7c6c27cdafeb9f
+
+development: &development
+  <<: *production
+  facebook:
+    key: 3360513200729949
+    secret: 42729ad431fe67f3bc3e09e3e33eff1d
+  github:
+    key: 8e3a81ec988b57a01813
+    secret: 6446c747221160eec0fe2f61f1b94a2f303005c3
+
+test:
+  <<: *development
