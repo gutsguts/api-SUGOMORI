@@ -21,6 +21,10 @@ Bundler.require(*Rails.groups)
 
 module Myapp
   class Application < Rails::Application
+    Rails.application.config.session_store :cookie_store, key: '_your_app_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
@@ -41,7 +45,15 @@ module Myapp
     #              methods: %i[get post patch delete options]
     #   end
     # end
+
+    config.action_controller.allow_forgery_protection = false
+
     config.middleware.use ActionDispatch::Cookies
     config.action_controller.default_protect_from_forgery = false
+    # deviseを使うのに必要
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Flash
   end
 end

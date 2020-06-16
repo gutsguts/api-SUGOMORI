@@ -2,26 +2,26 @@
 
 # module Api
 #   module V1
-class Api::V1::Auth::ApplicationController < ActionController::API # Note: here is not ::BASE
+class Api::V1::Auth::ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   skip_before_action :verify_authenticity_token, raise: false, if: :devise_controller?
 
   include SessionsHelper
 
-  # protect_from_forgery unless: -> { request.format.json? }
+  serialization_scope :view_context
 
-  # session[:_csrf_token]
-  # include ActionController::RequestForgeryProtection
-  # protect_from_forgery with: :exception
-  # protect_from_forgery with: :null_session
-  # include DeviseTokenAuth::Concerns::SetUserByToken
-  # include SessionsHelper
+  before_action :authenticate_account!, unless: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # before_filter :set_host
+  private
 
-  # def set_host
-  #   Rails.application.routes.default_url_options[:host] = request.host_with_port
-  # end
-  #   end
-  # end
+  def devise_token_auth_controller?
+    params[:controller].split('/')[0] == 'devise_token_auth'
+  end
+
+  def configure_permitted_parameters
+    # DBにaccounts.nameカラムがある場合
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
 end

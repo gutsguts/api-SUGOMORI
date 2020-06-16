@@ -17,6 +17,9 @@ development: &development
   github:
     key: 8e3a81ec988b57a01813
     secret: 6446c747221160eec0fe2f61f1b94a2f303005c3
+  twitter:
+    key: kugV0vKAWnhbUb3LOXf7osvQV
+    secret: CHwqYTeFntTJ2bAsLAE3HfGBTIjOGZhsMKuZz9AmUS8N0oPSDh
 
 test:
   <<: *development

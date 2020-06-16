@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+require 'devise_token_auth'
+
+class OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
   def facebook
     basic_action
   end

@@ -4,8 +4,13 @@ class User < ApplicationRecord
   # Include default devise modules.
   include DeviseTokenAuth::Concerns::User
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable
+         :recoverable, :rememberable, :validatable, :omniauthable, :confirmable
+  before_save -> { skip_confirmation! }
+  #  , omniauth_providers: %i[facebook]
+
+  #  omniauth_providers: %i[facebook twitter github]
   #  :confirmable
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
@@ -19,30 +24,30 @@ class User < ApplicationRecord
 
   validates :password, presence: true, length: { minimum: 6 }
 
-  def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
+  # def self.digest(string)
+  #   cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+  #                                                 BCrypt::Engine.cost
+  #   BCrypt::Password.create(string, cost: cost)
+  # end
 
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
+  # def self.new_token
+  #   SecureRandom.urlsafe_base64
+  # end
 
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
-  end
+  # def remember
+  #   self.remember_token = User.new_token
+  #   update_attribute(:remember_digest, User.digest(remember_token))
+  # end
 
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
+  # def authenticated?(remember_token)
+  #   return false if remember_digest.nil?
 
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
-  end
+  #   BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  # end
 
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
+  # def forget
+  #   update_attribute(:remember_digest, nil)
+  # end
 
   has_many :social_profiles, dependent: :destroy
   def social_profile(provider)

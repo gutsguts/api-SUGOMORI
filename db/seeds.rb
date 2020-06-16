@@ -13,8 +13,8 @@
 User.create!(name: 'Example AdminUser',
              email: 'example_admin-1@example.com',
              uid: 'example_admin-1@example.com',
-             password: 'password',
-             password_confirmation: 'password',
+             password: 'papapa',
+             password_confirmation: 'papapa',
              admin: true)
 
 99.times do |n|

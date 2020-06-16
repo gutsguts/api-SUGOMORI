@@ -29,5 +29,3 @@ docker-compose run api bash
 rails db:create
 rails db:migrate
 rails db:seed
-# api-SUGOMORI
-# api-SUGOMORI

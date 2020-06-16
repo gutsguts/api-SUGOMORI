@@ -27,8 +27,16 @@ Style/Documentation:
 
 Metrics/BlockLength:
   Enabled: false
-  # Exclude:
-  #   - '**/**/*'
+  Exclude:
+    - '*'
+  Max: 100
 
 Metrics/MethodLength:
   Enabled: false
+  CountComments: false  # count full line comments?
+  Max: 200
+
+Metrics/LineLength:
+  Enabled: false
+  CountComments: false  # count full line comments?
+  Max: 200
